@@ -2,7 +2,9 @@ package lk.ijse.gdse2023.classproject.api;
 
 import lk.ijse.gdse2023.classproject.dto.EmployeeDTO;
 import lk.ijse.gdse2023.classproject.service.EmpService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
+
     @Autowired
     EmpService empService;
 
