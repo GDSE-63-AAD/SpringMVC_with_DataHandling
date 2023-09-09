@@ -39,7 +39,7 @@ public class HibernateConfig {
         emf.setPackagesToScan("lk.ijse.gdse2023.classproject.entity");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         emf.setJpaVendorAdapter(vendorAdapter);
-        emf.setJpaPropertyMap(hibernateConfigs()); // Hibernate property map
+        emf.setJpaPropertyMap(hibernateProperties()); // Hibernate property map
         return emf;
     }
 
@@ -63,12 +63,13 @@ public class HibernateConfig {
     }
 
     // Load Hibernate Properties
-    private Map<String, String> hibernateConfigs() {
-        Map<String, String> hbConfigs = new HashMap<>();
-        hbConfigs.put("spring.jpa.hibernate.ddl-auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
-        hbConfigs.put("spring.jpa.show-sql", env.getProperty("spring.jpa.show-sql"));
-        hbConfigs.put("spring.jpa.properties.hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
-        hbConfigs.put("spring.jpa.properties.hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"));
-        return hbConfigs;
+    private Map<String, String> hibernateProperties() {
+        Map<String, String> hibernateProperties = new HashMap<>();
+        hibernateProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
+        hibernateProperties.put("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
+        hibernateProperties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
+        hibernateProperties.put("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"));
+        return hibernateProperties;
     }
+
 }

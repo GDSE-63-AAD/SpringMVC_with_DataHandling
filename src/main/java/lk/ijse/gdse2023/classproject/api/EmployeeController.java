@@ -15,11 +15,6 @@ import java.util.List;
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
 
-    @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
-
     @Autowired
     EmpService empService;
 
@@ -50,8 +45,8 @@ public class EmployeeController {
            ,@RequestBody EmployeeDTO employee){
       empService.updateEmployee(id,employee);
    }
-   @GetMapping
-   EmployeeDTO getSelectedEmp(String empId){
+   @GetMapping(value = "{empId}",produces = MediaType.APPLICATION_JSON_VALUE)
+   EmployeeDTO getSelectedEmp(@PathVariable String empId){
       return empService.getEmpbyId(empId);
    }
 }

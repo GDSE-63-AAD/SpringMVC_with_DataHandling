@@ -15,15 +15,12 @@ import java.util.UUID;
 @Transactional
 public class EmpServiceIMPL implements EmpService {
 
-    public final EmployeeRepository employeeRepository;
-    public final EntityDTOConversion conversion;
+    @Autowired
+    EmployeeRepository employeeRepository;
 
-    public EmpServiceIMPL(EmployeeRepository employeeRepository
-            ,EntityDTOConversion conversion){
+    @Autowired
+    EntityDTOConversion conversion;
 
-        this.employeeRepository = employeeRepository;
-        this.conversion = conversion;
-    }
 
     @Override
     public EmployeeDTO saveEmployeee(EmployeeDTO employeeDTO) {
@@ -35,16 +32,17 @@ public class EmpServiceIMPL implements EmpService {
 
     @Override
     public void deleteEmployee(String empId) {
-
+       //Todo: to be created
     }
 
     @Override
     public void updateEmployee(String empID, EmployeeDTO employeeDTO) {
-
+        //Todo: to be created
     }
 
     @Override
     public EmployeeDTO getEmpbyId(String empID) {
-        return null;
+        Employee employeeByEmpID = employeeRepository.findEmployeeByEmpID(empID);
+        return conversion.getEmpDTO(employeeByEmpID);
     }
 }
