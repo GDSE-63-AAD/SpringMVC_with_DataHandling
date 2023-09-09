@@ -15,6 +15,11 @@ import java.util.List;
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
 
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
+
     @Autowired
     EmpService empService;
 
