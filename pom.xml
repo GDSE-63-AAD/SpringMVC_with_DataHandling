@@ -6,7 +6,7 @@
 
     <groupId>lk.ijse.gdse2023</groupId>
     <artifactId>ClassProject</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>ClassProject</name>
     <packaging>war</packaging>
 

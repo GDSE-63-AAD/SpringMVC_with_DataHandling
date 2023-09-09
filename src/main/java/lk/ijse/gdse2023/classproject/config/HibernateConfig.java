@@ -12,6 +12,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -25,12 +27,13 @@ public class HibernateConfig {
     //Factory create
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource){
-        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean emf =
+                new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
-        emf.setPackagesToScan("");
+        emf.setPackagesToScan("lk/ijse.gdse2023.classproject.entity");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         emf.setJpaVendorAdapter(vendorAdapter);
-        //emf.setJpaPropertyMap("");//hibernate property map
+        emf.setJpaPropertyMap(hibernateConfigs());//hibernate property map
         return emf;
     }
     //Data Source create
@@ -50,6 +53,16 @@ public class HibernateConfig {
         transactionManager.setEntityManagerFactory(emf.getObject());
         return transactionManager;
     }
+    //Load Hibernate Properties
+    private Map<String,String> hibernateConfigs(){
+        Map<String, String> hbConfigs = new HashMap<>();
+        hbConfigs.put("spring.jpa.hibernate.ddl-auto",env.getProperty("spring.jpa.hibernate.ddl-auto"));
+        hbConfigs.put("spring.jpa.show-sql",env.getProperty("spring.jpa.show-sql"));
+        hbConfigs.put("spring.jpa.properties.hibernate.dialect",env.getProperty("spring.jpa.properties.hibernate.dialect"));
+        hbConfigs.put("spring.jpa.properties.hibernate.format_sql",env.getProperty("spring.jpa.properties.hibernate.format_sql"));
+        return hbConfigs;
+    }
+
 
 
 
