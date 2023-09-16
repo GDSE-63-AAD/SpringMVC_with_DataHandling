@@ -2,6 +2,8 @@ package lk.ijse.gdse2023.classproject.service.util;
 
 import lk.ijse.gdse2023.classproject.dto.EmployeeDTO;
 import lk.ijse.gdse2023.classproject.entity.Employee;
+import lk.ijse.gdse2023.classproject.exception.InvalidException;
+import lk.ijse.gdse2023.classproject.exception.NotFoundException;
 import lk.ijse.gdse2023.classproject.repository.EmployeeRepository;
 import lk.ijse.gdse2023.classproject.service.EmpService;
 import lk.ijse.gdse2023.classproject.util.EntityDTOConversion;
@@ -32,14 +34,14 @@ public class EmpServiceIMPL implements EmpService {
 
     @Override
     public void deleteEmployee(String empId) {
-        //ToDo: validate the empId
+        if(!employeeRepository.existsById(empId)) throw new NotFoundException("Employee Not Found");
        employeeRepository.deleteByEmpID(empId);
     }
 
     @Override
     public void updateEmployee(String empID, EmployeeDTO employee) {
         Optional<Employee> tmpEmp = employeeRepository.findById(empID);
-        if(!tmpEmp.isPresent()) throw new RuntimeException("Employee not found");
+        if(!tmpEmp.isPresent()) throw new NotFoundException("Employee not found");
         tmpEmp.get().setEmpName(employee.getEmpName());
         tmpEmp.get().setEmpDep(employee.getEmpDep());
         tmpEmp.get().setEmpEmail(employee.getEmpEmail());
@@ -48,6 +50,7 @@ public class EmpServiceIMPL implements EmpService {
 
     @Override
     public EmployeeDTO getEmpbyId(String empID) {
+        if(!employeeRepository.existsById(empID)) throw new InvalidException("Invalid Employee ID");
         Employee employeeByEmpID = employeeRepository.findEmployeeByEmpID(empID);
         return conversion.getEmpDTO(employeeByEmpID);
     }
