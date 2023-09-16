@@ -18,7 +18,7 @@ public class EmployeeController {
     @Autowired
     EmpService empService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.MULTIPART_FORM_DATA_VALUE)
    EmployeeDTO saveEmployee(
            @RequestPart String empName,
            @RequestPart String empEmail,

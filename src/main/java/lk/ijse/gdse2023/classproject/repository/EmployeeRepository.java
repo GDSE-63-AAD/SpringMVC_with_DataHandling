@@ -10,4 +10,5 @@ public interface EmployeeRepository extends JpaRepository<Employee,String> {
     Employee save(Employee employee);
     Employee findEmployeeByEmpID(String id);
     void deleteByEmpID(String id);
+
 }

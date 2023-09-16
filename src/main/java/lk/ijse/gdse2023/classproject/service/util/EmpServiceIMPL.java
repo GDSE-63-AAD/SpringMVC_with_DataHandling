@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,7 +22,6 @@ public class EmpServiceIMPL implements EmpService {
     @Autowired
     EntityDTOConversion conversion;
 
-
     @Override
     public EmployeeDTO saveEmployeee(EmployeeDTO employeeDTO) {
         employeeDTO.setEmpID(UUID.randomUUID().toString());
@@ -32,12 +32,18 @@ public class EmpServiceIMPL implements EmpService {
 
     @Override
     public void deleteEmployee(String empId) {
-       //Todo: to be created
+        //ToDo: validate the empId
+       employeeRepository.deleteByEmpID(empId);
     }
 
     @Override
-    public void updateEmployee(String empID, EmployeeDTO employeeDTO) {
-        //Todo: to be created
+    public void updateEmployee(String empID, EmployeeDTO employee) {
+        Optional<Employee> tmpEmp = employeeRepository.findById(empID);
+        if(!tmpEmp.isPresent()) throw new RuntimeException("Employee not found");
+        tmpEmp.get().setEmpName(employee.getEmpName());
+        tmpEmp.get().setEmpDep(employee.getEmpDep());
+        tmpEmp.get().setEmpEmail(employee.getEmpEmail());
+        tmpEmp.get().setEmpProfile(employee.getEmpProfile());
     }
 
     @Override
