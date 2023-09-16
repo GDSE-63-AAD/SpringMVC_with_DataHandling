@@ -39,11 +39,21 @@ public class EmployeeController {
    void deleteEmpoyee(@PathVariable String id){
        empService.deleteEmployee(id);
    }
-   @PutMapping("{id}")
+   @PatchMapping("{id}")
    void updateEmployee(
-           @PathVariable String id
-           ,@RequestBody EmployeeDTO employee){
-      empService.updateEmployee(id,employee);
+           @PathVariable String id,
+           @RequestPart String empName,
+           @RequestPart String empEmail,
+           @RequestPart String empDepartment,
+           @RequestPart byte [] empProfile
+   ){
+       String empProfileStrUpdate = Base64.getEncoder().encodeToString(empProfile);
+       EmployeeDTO updateEmp = new EmployeeDTO();
+       updateEmp.setEmpName(empName);
+       updateEmp.setEmpEmail(empEmail);
+       updateEmp.setEmpDep(empDepartment);
+       updateEmp.setEmpProfile(empProfileStrUpdate);
+       empService.updateEmployee(id,updateEmp);
    }
    @GetMapping(value = "{empId}",produces = MediaType.APPLICATION_JSON_VALUE)
    EmployeeDTO getSelectedEmp(@PathVariable String empId){
